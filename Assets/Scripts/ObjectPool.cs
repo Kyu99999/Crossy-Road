@@ -2,48 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+
+
+public class ObjectPool<T> : MonoBehaviour
 {
-    public static ObjectPool objectPool = null;
+    public ObjectPool<T> objectPool = null;
 
     public GameObject[] trees;
     public GameObject[] cars;
 
-    public Queue<GameObject> QueueTrees;
-    public Queue<GameObject> QueueCars;
+    public List<T> pool;
+
+    //public Queue<GameObject> QueueTrees; //³ª¹«´Â ·£´ý
+    
+    //public Queue<GameObject> QueueBlueCar;
+    //public Queue<GameObject> QueueBlueTruck;
+    //public Queue<GameObject> QueueGreenCar;
+    //public Queue<GameObject> QueueOrangeCar;
+    //public Queue<GameObject> QueuePoliceCar;
+    //public Queue<GameObject> QueuePurpleCar;
+    //public Queue<GameObject> QueueRedTruck;
+    //public Queue<GameObject> QueueTaxi;
 
     private void Awake()
     {
-        if(objectPool == null)
-        {
-            objectPool = this;
-        }
-        else
-        {
-            if(objectPool != this)
-            {
-                Destroy(this.gameObject);
-            }
-        }
+        
     }
 
     void Start()
     {
-        for(int i=0; i< 100; i++)
-        {
-            GameObject tree = Instantiate(trees[Random.Range(0, 4)]);
-            tree.SetActive(false);
-            QueueTrees.Enqueue(tree);
-
-            GameObject car = Instantiate(cars[Random.Range(0, 8)]);
-            car.SetActive(false);
-            QueueCars.Enqueue(car);
-        }
+        pool = new List<T>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            foreach(var i in pool)
+            {
+                Debug.Log(i);
+            }
+        }
+            
     }
+
 }
