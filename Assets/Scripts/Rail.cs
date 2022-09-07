@@ -17,11 +17,12 @@ public class Rail : MonoBehaviour
     public Rails rail;
     
     //Test code
-    public GameObject[] tree;
+    public GameObject[] trees;
+    public GameObject[] Cars;
     //
     void Start()
     {
-         
+        
     }
 
     // Update is called once per frame
@@ -56,9 +57,16 @@ public class Rail : MonoBehaviour
 
         for (int i = 0; i < treeCount; i++)
         {
-            Vector3 pos = new Vector3(Random.Range(-4, 11), 0, 0);
-            Instantiate(tree[0], transform.position + pos, Quaternion.identity);    //Use Object Pool !!
+            Vector3 pos = new Vector3(Random.Range(-4, 5), 0, 0);
+            Instantiate(trees[0], transform.position + pos, Quaternion.identity);    //Use Object Pool !!
         }
+        //
+    }
+
+    public void MakeCar()
+    {
+        //Test Code
+        
         //
     }
 }

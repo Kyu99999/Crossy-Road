@@ -14,7 +14,7 @@ public class RailManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.W))
+        if(Input.GetKeyDown(KeyCode.W)) //
         {   
             //Test Code
             GameObject rail = Instantiate(rails[(int)Random.Range(0, 4)], new Vector3(0,0,count++), Quaternion.identity);
