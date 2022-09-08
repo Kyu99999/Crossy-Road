@@ -4,46 +4,81 @@ using UnityEngine;
 
 
 
-public class ObjectPool<T> : MonoBehaviour
+public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
 {
-    public ObjectPool<T> objectPool = null;
-
     public GameObject[] trees;
     public GameObject[] cars;
 
-    public List<T> pool;
+    public T testPrefab;
 
-    //public Queue<GameObject> QueueTrees; //³ª¹«´Â ·£´ý
+    public List<T> listPool;    
+    public Queue<T> QueuePool;  
+    public Dictionary<CarsName, T> dictionaryPool;    //cars, rail
+
     
-    //public Queue<GameObject> QueueBlueCar;
-    //public Queue<GameObject> QueueBlueTruck;
-    //public Queue<GameObject> QueueGreenCar;
-    //public Queue<GameObject> QueueOrangeCar;
-    //public Queue<GameObject> QueuePoliceCar;
-    //public Queue<GameObject> QueuePurpleCar;
-    //public Queue<GameObject> QueueRedTruck;
-    //public Queue<GameObject> QueueTaxi;
 
     private void Awake()
     {
-        
+        listPool = new List<T>();
+        QueuePool = new Queue<T>();
+        dictionaryPool = new Dictionary<CarsName, T>();
+
+        listPool.Add(Instantiate(testPrefab));
+
+        Debug.Log(listPool[0]);
+
     }
+   
 
     void Start()
     {
-        pool = new List<T>();
+
+        
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            foreach(var i in pool)
-            {
-                Debug.Log(i);
-            }
-        }
-            
+        Debug.Log("Test");
     }
+
+    //public T GetListPool(GameObject obj)        
+    //{
+    //    if(listPool.Count == 0)
+    //    {
+
+    //        GameObject getObj = Instantiate(obj);
+    //        return getObj.GetComponent<T>();
+    //    }
+    //    else
+    //    {
+    //        int lastIndex = listPool.Count - 1;
+    //        T getObj = listPool[lastIndex];
+    //        listPool.RemoveAt(lastIndex);
+    //        return getObj;
+    //    }
+    //}
+
+    //public T GetDictionaryPool(string str, GameObject obj)
+    //{
+    //    if (!dictionaryPool.ContainsKey(str))
+    //    {
+    //        GameObject getObj = Instantiate(obj);
+    //        return getObj.GetComponent<T>();
+    //    }
+    //    else
+    //    {
+    //        var enumerator = dictionaryPool.GetEnumerator();
+    //        while (true)
+    //        {
+    //            if(enumerator.Current.Key == str)
+    //            {
+
+    //            }
+
+    //        }
+
+
+    //    }
+    //}
 
 }

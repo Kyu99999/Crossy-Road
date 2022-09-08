@@ -6,9 +6,13 @@ public class RailManager : MonoBehaviour
 {
     public Rail[] rails;
     public int count { get; set; } = 1;
+
+    public ObjectPool<Rail> railPool;
+    
     void Start()
     {
-
+        railPool = new ObjectPool<Rail>();
+        Instantiate(railPool);
     }
 
     // Update is called once per frame
@@ -16,9 +20,7 @@ public class RailManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.W)) //
         {
-            Rail rail = rails[0];
-            ObjectPool<Rail> railPool = new ObjectPool<Rail>();
-            railPool.pool.Add(rail);
+            Debug.Log(railPool.listPool[0]);
         }
     }
 }
