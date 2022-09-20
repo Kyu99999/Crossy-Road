@@ -21,6 +21,8 @@ public class Car : MonoBehaviour
     public float speed = 3f;
 
     public Vector3 oriPos;
+    private float timer = 0f;
+    private float maxTime = 6f;
 
     void Start()
     {
@@ -31,19 +33,25 @@ public class Car : MonoBehaviour
     void Update()
     {
         transform.position += transform.forward * Time.deltaTime * speed;
+
+        timer += Time.deltaTime;
+        if(timer > maxTime)
+        {
+            timer = 0f;
+            ObjectPoolManager.instance.carPool.InsertObj(this.gameObject);
+        }
     }
 
     public void Init(CarsName carsName)
     {
-        
         this.gameObject.SetActive(false);
     }
 
-    public void Set(Vector3 pos)
+    public void Set(Transform trans)
     {
-        transform.position = pos;
-        oriPos = pos;
+        transform.position = trans.position;
+        //oriPos = pos;
         speed = Random.Range(3, 7);
-        transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
+        transform.rotation = trans.rotation;
     }
 }

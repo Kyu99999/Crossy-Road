@@ -4,29 +4,22 @@ using System.ComponentModel;
 using UnityEngine;
 
 
-public class ObjectPool<T> //: MonoBehaviour where T : MonoBehaviour
+public class ObjectPool: MonoBehaviour 
 {
     public GameObject[] trees;
     public GameObject[] cars;
 
-    public Gameobject testPrefab;
+    public GameObject testPrefab;
 
-    public List<T> listPool;    
-    public Queue<T> QueuePool;  
-    public Dictionary<CarsName, T> dictionaryPool;    //cars, rail
+    //public List<T> listPool;
+    public Queue<GameObject> queuePool;
+    //public Dictionary<CarsName, T> dictionaryPool;    //cars, rail
 
 
     private void Awake()
     {
-        listPool = new List<T>();
-        QueuePool = new Queue<T>();
-        dictionaryPool = new Dictionary<CarsName, T>();
-
-        listPool.Add(Instantiate(testPrefab));
-
-        Debug.Log(listPool[0]);
     }
-   
+
 
     void Start()
     {
@@ -35,17 +28,43 @@ public class ObjectPool<T> //: MonoBehaviour where T : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Test");
     }
 
-    public Init(Gameobject objs)
+    // parent를 부모로 객체를 만든 다음 저장.
+    public void Init(GameObject objs, GameObject parent)
     {
-        testPrefab = objs;
+        queuePool = new Queue<GameObject>();
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject gameObj = Instantiate(objs, parent.transform);
+           
+            gameObj.SetActive(false);
+
+            queuePool.Enqueue(gameObj);
+        }
     }
 
-    public Gameobject GetObj()
+    // 새로운 obj 추가
+    public void AddPool(GameObject obj, GameObject parent)
     {
+        GameObject gameObj = Instantiate(obj, parent.transform);
+        gameObj.SetActive(false);
+        queuePool.Enqueue(gameObj);
+    }
 
-        return testPrefab;
+    // 반납
+    public void InsertObj(GameObject obj)
+    {
+        obj.SetActive(false);
+
+        queuePool.Enqueue(obj);
+    }
+
+    
+    public GameObject GetObj()
+    {
+        GameObject gameObj = queuePool.Dequeue();
+        gameObj.SetActive(true);
+        return gameObj;
     }
 }

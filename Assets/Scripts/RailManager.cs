@@ -4,23 +4,36 @@ using UnityEngine;
 
 public class RailManager : MonoBehaviour
 {
+    public static RailManager instance;
+
     public Rail[] rails;
     public int count { get; set; } = 1;
 
-    public ObjectPool<Rail> railPool;
-    
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     void Start()
     {
-        railPool = new ObjectPool<Rail>();
-        Instantiate(railPool);
-    }
+      
+     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.W)) //
+        if (Input.GetKeyDown(KeyCode.W)) //
         {
-            Debug.Log(railPool.listPool[0]);
+            GameObject railObj = ObjectPoolManager.instance.railPool.GetObj();
+            Rail rail = railObj.GetComponent<Rail>();
+            rail.Init(count++);
         }
     }
 }
